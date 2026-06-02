@@ -54,7 +54,7 @@ export default function Home() {
   ];
 
   const testimonials: Testimonial[] = [
-    { id: 1, author: "A Dedicated Fan", location: "New York", message: "Wishing the actual queen of main character energy a spectacular year ahead!" },
+    { id: 1, author: "SAKSHI", location: "Mumbai", message: "Hey sneha, I have only known you briefly but I know how wonderful of a soul you are .. I wouldn’t have a found a better replacement of me for the room than you .. your joyous presence and kindness was all we needed I will never stop being grateful to you for subleasing and Idm milking you thousand more times for it cuz you don’t know how much you have helped gain something I always wanted. Thank you again and keep smiling your way through everything and be the amazing photographer that you are. Happiest birthdayyyyyy sneha !!! 🫶🏻" },
     { id: 2, author: "The Group Chat Collective", location: "Global", message: "Thank you for holding our sanity together with top-tier stickers and immaculate humor." },
     { id: 3, author: "Anonymous Well-Wisher", location: "Kathmandu", message: "The vibe architect herself. May your day be fully clear of stress and overflowing with cake." },
     { id: 4, author: "Local Committee for Vibes", location: "Michigan", message: "Public Notice: Attendance is mandatory at all celebration milestones today. Be happy, be well!" },
