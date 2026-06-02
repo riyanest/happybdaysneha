@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { Newspaper, Heart, Gift, X, Volume2, VolumeX } from 'lucide-react';
+import { Newspaper, Heart, Gift, X, Volume2, VolumeX, MessageSquare, Puzzle } from 'lucide-react';
 
 interface Video {
   id: number;
@@ -10,10 +10,33 @@ interface Video {
   src: string;
 }
 
+interface Testimonial {
+  id: number;
+  author: string;
+  location: string;
+  message: string;
+}
+
 export default function Home() {
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const [isMuted, setIsMuted] = useState(true);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  // Sudoku state management (0 denotes empty cell)
+  const initialSudoku = [
+    [1, 0, 3, 0],
+    [0, 0, 0, 2],
+    [4, 0, 0, 0],
+    [0, 2, 0, 1]
+  ];
+  const solutionSudoku = [
+    [1, 4, 3, 2],
+    [3, 2, 1, 4],
+    [4, 1, 2, 3],
+    [2, 3, 4, 1]
+  ];
+  const [sudokuGrid, setSudokuGrid] = useState<number[][]>(initialSudoku);
+  const [sudokuSolved, setSudokuSolved] = useState(false);
 
   const videos: Video[] = [
     { id: 1, title: 'The Ultimate Birthday Wishes Compilation', src: '/bff.mp4' },
@@ -30,7 +53,18 @@ export default function Home() {
     { id: 11, title: 'Behind the Scenes: Daily Adventures & Vibes', src: '/VID-20260602-WA0039.mp4' },
   ];
 
-  // Auto-play attempt on mount
+  const testimonials: Testimonial[] = [
+    { id: 1, author: "A Dedicated Fan", location: "New York", message: "Wishing the actual queen of main character energy a spectacular year ahead!" },
+    { id: 2, author: "The Group Chat Collective", location: "Global", message: "Thank you for holding our sanity together with top-tier stickers and immaculate humor." },
+    { id: 3, author: "Anonymous Well-Wisher", location: "Kathmandu", message: "The vibe architect herself. May your day be fully clear of stress and overflowing with cake." },
+    { id: 4, author: "Local Committee for Vibes", location: "Michigan", message: "Public Notice: Attendance is mandatory at all celebration milestones today. Be happy, be well!" },
+    { id: 5, author: "Old Friend", location: "Mumbai", message: "Years fly by but your stellar playlist curation and warm energy remain unbothered by time." },
+    { id: 6, author: "The Foodie Alliance", location: "New Delhi", message: "URGENT BULLETIN: High-dosage dessert consumption recommended today. Calorie counting is strictly prohibited by broadsheet decree." },
+    { id: 7, author: "Late Night Scrolling Club", location: "London", message: "Nobody makes a midnight text layout or a witty comeback drop quite like Sneha. A true living legend." },
+    { id: 8, author: "Department of Aesthetics", location: "Paris", message: "An impeccable fashion sense paired with an absolute refusal to let anyone experience a bad vibe. Elite behavior." },
+    { id: 9, author: "The Nostalgia Archive", location: "Sydney", message: "Throwbacks are breaking the server infrastructure today! Here's to making a million more ridiculous memories." },
+  ];
+
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = 0.4;
@@ -50,7 +84,6 @@ export default function Home() {
     }
   };
 
-  // Automatically pause background track if a video modal pops up
   useEffect(() => {
     if (audioRef.current) {
       if (selectedVideo) {
@@ -61,9 +94,44 @@ export default function Home() {
     }
   }, [selectedVideo, isMuted]);
 
+  const handleSudokuChange = (row: number, col: number, val: string) => {
+    const num = parseInt(val, 10);
+    if (isNaN(num) || num < 1 || num > 4) {
+      const updatedGrid = [...sudokuGrid];
+      updatedGrid[row][col] = 0;
+      setSudokuGrid(updatedGrid);
+      setSudokuSolved(false);
+      return;
+    }
+
+    const updatedGrid = sudokuGrid.map((r, rowIndex) =>
+      r.map((cell, colIndex) => (rowIndex === row && colIndex === col ? num : cell))
+    );
+    setSudokuGrid(updatedGrid);
+
+    const checkWin = updatedGrid.every((r, rowIndex) =>
+      r.every((cell, colIndex) => cell === solutionSudoku[rowIndex][colIndex])
+    );
+    if (checkWin) setSudokuSolved(true);
+  };
+
   return (
     <div className="min-h-screen bg-[#f4f1ea] text-[#1a1a1a] font-serif p-4 md:p-8 selection:bg-amber-200 relative pb-20">
       
+      {/* Global style injection for seamless scrolling mechanics */}
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes scrollVertical {
+          0% { transform: translateY(0); }
+          100% { transform: translateY(-50%); }
+        }
+        .animate-scroll-vertical {
+          animation: scrollVertical 65s linear infinite;
+        }
+        .animate-scroll-vertical:hover {
+          animation-play-state: paused;
+        }
+      `}} />
+
       {/* Hidden Background Audio Element */}
       <audio 
         ref={audioRef}
@@ -93,24 +161,20 @@ export default function Home() {
             <div>{new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</div>
           </div>
           
-          {/* <h1 className="text-center font-black text-xl md:text-7xl lg:text-8xl tracking-tight uppercase my-4 font-serif border-y-2 border-stone-950 py-2">
-            THE RISING BADDIE AMBASSADOR SNEHA
+          <h1 className="text-center font-serif uppercase my-4 border-y-2 border-stone-950 py-3 flex flex-col items-center justify-center tracking-tight text-stone-950">
+            <span className="text-xs md:text-sm font-sans font-black tracking-widest text-stone-600 mb-1 block">
+              The Nation's Pride
+            </span>
+            <span className="font-black text-4xl sm:text-6xl md:text-7xl lg:text-8xl leading-none">
+              THE RISING BADDIE
+            </span>
+            <span className="font-medium italic text-2xl sm:text-4xl md:text-5xl lg:text-6xl lowercase my-1 leading-none tracking-normal block text-stone-800">
+              &mdash; ambassador &mdash;
+            </span>
+            <span className="font-black text-5xl sm:text-7xl md:text-8xl lg:text-9xl leading-none tracking-tighter block">
+              SNEHA
+            </span>
           </h1>
-           */}
-           <h1 className="text-center font-serif uppercase my-4 border-y-2 border-stone-950 py-3 flex flex-col items-center justify-center tracking-tight text-stone-950">
-  <span className="text-xs md:text-sm font-sans font-black tracking-widest text-stone-600 mb-1 block">
-    The Nation's Pride
-  </span>
-  <span className="font-black text-4xl sm:text-6xl md:text-7xl lg:text-8xl leading-none">
-    THE RISING BADDIE
-  </span>
-  <span className="font-medium italic text-2xl sm:text-4xl md:text-5xl lg:text-6xl lowercase my-1 leading-none tracking-normal block text-stone-800">
-    &mdash; ambassador &mdash;
-  </span>
-  <span className="font-black text-5xl sm:text-7xl md:text-8xl lg:text-9xl leading-none tracking-tighter block">
-    SNEHA
-  </span>
-</h1>
           <div className="text-center italic text-sm text-stone-700 tracking-wide mt-2">
             "ALL BE HAPPY, ALL BE WELL — CELEBRATING AN EXTRAORDINARY HUMAN"
           </div>
@@ -249,6 +313,108 @@ export default function Home() {
                   <span><strong>Known Alliance:</strong> Mastered the art of choosing peace, treating friends, and curating immaculate music playlists.</span>
                 </li>
               </ul>
+            </div>
+
+            {/* ================= MASSIVE LENGTH CLASSIFIEDS MARQUEE ================= */}
+            <div className="border border-stone-300 p-4 space-y-3 bg-[#faf8f5]">
+              <div className="flex items-center gap-1.5 border-b border-stone-900 pb-1">
+                <MessageSquare className="w-3.5 h-3.5 text-stone-800" />
+                <h4 className="font-bold font-sans uppercase tracking-wider text-xs">
+                  Public Notices & Greetings
+                </h4>
+              </div>
+              
+              <div className="relative h-[1160px] overflow-hidden border border-dashed border-stone-300 p-1 bg-[#fbfbfa]">
+                {/* Vintage Fade Gradient Shadows */}
+                <div className="absolute top-0 left-0 w-full h-12 bg-gradient-to-b from-[#fbfbfa] to-transparent z-10 pointer-events-none" />
+                <div className="absolute bottom-0 left-0 w-full h-12 bg-gradient-to-t from-[#fbfbfa] to-transparent z-10 pointer-events-none" />
+                
+                {/* Scrolling Track */}
+                <div className="flex flex-col gap-3 animate-scroll-vertical select-none">
+                  {/* Base Set */}
+                  {testimonials.map((item) => (
+                    <div 
+                      key={`orig-${item.id}`} 
+                      className="p-2.5 bg-stone-50 border border-stone-200 shadow-2xs text-xs font-serif leading-relaxed text-stone-800 hover:bg-amber-50/50 hover:border-stone-400 transition-all"
+                    >
+                      <p className="italic">"{item.message}"</p>
+                      <div className="mt-1.5 text-[10px] uppercase font-sans tracking-wider text-stone-500 font-bold flex justify-between">
+                        <span>&mdash; {item.author}</span>
+                        <span>{item.location}</span>
+                      </div>
+                    </div>
+                  ))}
+                  {/* Clone Set for seamless continuous scrolling loop */}
+                  {testimonials.map((item) => (
+                    <div 
+                      key={`clone-${item.id}`} 
+                      className="p-2.5 bg-stone-50 border border-stone-200 shadow-2xs text-xs font-serif leading-relaxed text-stone-800 hover:bg-amber-50/50 hover:border-stone-400 transition-all"
+                    >
+                      <p className="italic">"{item.message}"</p>
+                      <div className="mt-1.5 text-[10px] uppercase font-sans tracking-wider text-stone-500 font-bold flex justify-between">
+                        <span>&mdash; {item.author}</span>
+                        <span>{item.location}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <p className="text-[10px] text-center italic text-stone-400 font-sans">
+                (Hover over notices to pause scroll track)
+              </p>
+            </div>
+
+            {/* ================= VINTAGE DAILY COFFEE BREAK SUDOKU (NOW BELOW TESTIMONIALS) ================= */}
+            <div className="border border-stone-300 p-4 space-y-3 bg-[#fdfdfd]">
+              <div className="flex items-center gap-1.5 border-b border-stone-900 pb-1">
+                <Puzzle className="w-3.5 h-3.5 text-stone-800" />
+                <h4 className="font-bold font-sans uppercase tracking-wider text-xs">
+                  Daily BroadSheet Coffee Break: Mini Sudoku
+                </h4>
+              </div>
+              <p className="text-[11px] font-serif italic text-stone-600 leading-snug">
+                Fill the empty boxes with numbers 1 through 4. Every row, column, and 2x2 square block must hold numbers unique.
+              </p>
+
+              <div className="flex flex-col items-center py-2 bg-stone-50/50 border border-stone-200 rounded-xs">
+                {/* 4x4 Grid Block */}
+                <div className="grid grid-cols-4 border-2 border-stone-950 bg-white">
+                  {sudokuGrid.map((row, rIdx) =>
+                    row.map((cell, cIdx) => {
+                      const isPreFilled = initialSudoku[rIdx][cIdx] !== 0;
+                      return (
+                        <div
+                          key={`${rIdx}-${cIdx}`}
+                          className={`w-10 h-10 flex items-center justify-center border border-stone-300 text-sm font-sans font-bold
+                            ${cIdx === 1 ? "border-r-2 border-r-stone-950" : ""}
+                            ${rIdx === 1 ? "border-b-2 border-b-stone-950" : ""}
+                          `}
+                        >
+                          {isPreFilled ? (
+                            <span className="text-stone-950 select-none bg-stone-100/80 w-full h-full flex items-center justify-center">
+                              {cell}
+                            </span>
+                          ) : (
+                            <input
+                              type="text"
+                              maxLength={1}
+                              value={cell === 0 ? "" : cell}
+                              onChange={(e) => handleSudokuChange(rIdx, cIdx, e.target.value)}
+                              className="w-full h-full text-center font-black focus:outline-none focus:bg-amber-100 text-amber-900 bg-transparent"
+                            />
+                          )}
+                        </div>
+                      );
+                    })
+                  )}
+                </div>
+
+                {sudokuSolved && (
+                  <div className="mt-3 text-center px-4 py-1 bg-emerald-50 border border-emerald-300 text-emerald-800 font-sans text-xs uppercase tracking-wider font-bold animate-fade-in rounded-sm">
+                    ✨ Puzzle Solved! Pure Brilliance! ✨
+                  </div>
+                )}
+              </div>
             </div>
 
           </aside>
