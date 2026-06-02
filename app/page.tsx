@@ -4,12 +4,16 @@ import { useState } from "react";
 import Image from "next/image";
 import { Newspaper, Heart, Gift, X } from 'lucide-react';
 
-export default function Home() {
-  // State to manage the active video for the lightbox modal
-  const [selectedVideo, setSelectedVideo] = useState(null);
+interface Video {
+  id: number;
+  title: string;
+  src: string;
+}
 
-  // 1. LOCAL VIDEO URLS
-  const videos = [
+export default function Home() {
+  const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
+
+  const videos: Video[] = [
     { id: 1, title: 'The Ultimate Birthday Wishes Compilation', src: '/bff.mp4' },
     { id: 2, title: 'Throwback: Sneha’s Funniest Moments of the Year', src: '/VID-20260602-WA0000.mp4' },
     { id: 3, title: 'A Special Montage From the Family Archive', src: '/VID-20260602-WA0001.mp4' },
@@ -99,14 +103,13 @@ export default function Home() {
               </div>
             </article>
 
-            {/* VIDEO GRID SECTION (Now 3 columns on desktop + Interactive Modal Click) */}
+            {/* VIDEO GRID SECTION */}
             <section className="pt-6">
               <div className="flex items-center gap-2 mb-4 border-b-2 border-stone-900 pb-1">
                 <Newspaper className="w-5 h-5 text-stone-800" />
                 <h3 className="text-xl font-bold uppercase tracking-tight font-sans">Special Broadcasts: Living Pictures</h3>
               </div>
               
-              {/* Changed grid layout to display 3 columns per row on larger viewports */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-start">
                 {videos.map((video) => (
                   <div 
@@ -125,7 +128,7 @@ export default function Home() {
                         className="w-full h-auto block grayscale contrast-115 group-hover:grayscale-0 transition-all duration-500"
                       />
                       <div className="absolute inset-0 bg-stone-900/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <span className="bg-stone-900/80 text-white font-sans font-bold text-xs px-3 py-1.5 uppercase tracking-wider rounded-sm backdrop-blur-xs">
+                        <span className="bg-stone-900/80 text-white font-sans font-bold text-xs px-3 py-1.5 uppercase tracking-wider rounded-sm backdrop-blur-[2px]">
                           Click to Play Fullscreen
                         </span>
                       </div>
@@ -206,35 +209,32 @@ export default function Home() {
       {/* ================= LIGHTBOX INTERACTIVE MODAL ================= */}
       {selectedVideo && (
         <div 
-          className="fixed inset-0 bg-stone-950/90 z-50 flex flex-col justify-center items-center p-4 backdrop-blur-md animate-fade-in"
-          onClick={() => setSelectedVideo(null)} // Click outside to close
+          className="fixed inset-0 bg-stone-950/90 z-50 flex flex-col justify-center items-center p-4 backdrop-blur-md"
+          onClick={() => setSelectedVideo(null)}
         >
           <div 
             className="relative w-full max-w-3xl bg-stone-900 border border-stone-700 shadow-2xl p-2 sm:p-4 rounded-md"
-            onClick={(e) => e.stopPropagation()} // Prevents closing modal when clicking the inner layout
+            onClick={(e) => e.stopPropagation()}
           >
-            {/* Close Button */}
             <button 
               onClick={() => setSelectedVideo(null)}
-              className="absolute -top-12 right-0 sm:right-2 bg-stone-800 hover:bg-stone-700 text-stone-200 p-2 rounded-full transition-colors focus:outline-hidden"
+              className="absolute -top-12 right-0 sm:right-2 bg-stone-800 hover:bg-stone-700 text-stone-200 p-2 rounded-full transition-colors"
               aria-label="Close presentation"
             >
               <X className="w-6 h-6" />
             </button>
 
-            {/* Video Player Box */}
             <div className="w-full bg-black flex justify-center items-center rounded-sm overflow-hidden aspect-video max-h-[70vh]">
               <video 
                 src={selectedVideo.src}
                 autoPlay
                 controls
-                muted={false} // Unmuted with audio enabled on expand
+                muted={false}
                 playsInline
                 className="w-full h-full object-contain"
               />
             </div>
 
-            {/* Title Metadata Block */}
             <div className="mt-4 px-2 pb-1 text-left border-t border-stone-800 pt-3">
               <span className="font-sans text-[10px] text-amber-400 tracking-widest uppercase font-bold block mb-1">
                 Now Airing Theatre Broadcast
