@@ -39,9 +39,9 @@ export default function Home() {
   const [sudokuSolved, setSudokuSolved] = useState(false);
 
   const videos: Video[] = [
-    { id: 1, title: 'The Ultimate Birthday Wishes Compilation', src: '/bff.mp4' },
-    { id: 2, title: 'Throwback: Sneha’s Funniest Moments of the Year', src: '/sayara.mp4' },
-    { id: 2, title: 'Throwback: Sneha’s Funniest Moments of the Year', src: '/VID-20260602-WA0000.mp4' },
+    { id: 1, title: 'Lipo', src: '/bff.mp4' },
+    { id: 2, title: 'Sayara', src: '/sayara.mp4' },
+    { id: 2, title: 'Ava', src: '/VID-20260602-WA0000.mp4' },
     { id: 3, title: 'A Special Montage From the Family Archive', src: '/VID-20260602-WA0001.mp4' },
     { id: 4, title: 'Behind the Scenes: Daily Adventures & Vibes', src: '/VID-20260602-WA0002.mp4' },
     { id: 5, title: 'Behind the Scenes: Daily Adventures & Vibes', src: '/VID-20260602-WA0032.mp4' },
@@ -55,14 +55,10 @@ export default function Home() {
 
   const testimonials: Testimonial[] = [
     { id: 1, author: "SAKSHI", location: "Mumbai", message: "Hey sneha, I have only known you briefly but I know how wonderful of a soul you are .. I wouldn’t have a found a better replacement of me for the room than you .. your joyous presence and kindness was all we needed I will never stop being grateful to you for subleasing and Idm milking you thousand more times for it cuz you don’t know how much you have helped gain something I always wanted. Thank you again and keep smiling your way through everything and be the amazing photographer that you are. Happiest birthdayyyyyy sneha !!! 🫶🏻" },
-    { id: 2, author: "The Group Chat Collective", location: "Global", message: "Thank you for holding our sanity together with top-tier stickers and immaculate humor." },
-    { id: 3, author: "Anonymous Well-Wisher", location: "Kathmandu", message: "The vibe architect herself. May your day be fully clear of stress and overflowing with cake." },
-    { id: 4, author: "Local Committee for Vibes", location: "Michigan", message: "Public Notice: Attendance is mandatory at all celebration milestones today. Be happy, be well!" },
-    { id: 5, author: "Old Friend", location: "Mumbai", message: "Years fly by but your stellar playlist curation and warm energy remain unbothered by time." },
-    { id: 6, author: "The Foodie Alliance", location: "New Delhi", message: "URGENT BULLETIN: High-dosage dessert consumption recommended today. Calorie counting is strictly prohibited by broadsheet decree." },
-    { id: 7, author: "Late Night Scrolling Club", location: "London", message: "Nobody makes a midnight text layout or a witty comeback drop quite like Sneha. A true living legend." },
-    { id: 8, author: "Department of Aesthetics", location: "Paris", message: "An impeccable fashion sense paired with an absolute refusal to let anyone experience a bad vibe. Elite behavior." },
-    { id: 9, author: "The Nostalgia Archive", location: "Sydney", message: "Throwbacks are breaking the server infrastructure today! Here's to making a million more ridiculous memories." },
+    { id: 2, author: "Yogesh", location: "Global", message: "Happy Birthday Shneha🎂🥳🎉 hope all your wishes come true and like you said one day you will become so successful that anyone who does will surely regret letting you go. Stay blessed and have lot's of fun 🙌🎉🎊" },
+    { id: 3, author: "Ava", location: "Back Home", message: "Hi Shneee, it’s Avaa. HAPPY BIRTHDAY SHNEE!!!! Hope all of your dreams come true. I miss bunking class with you (Should’ve done more of that). Malai bhetna aa na please. Love you lotttsssss<3" },
+    { id: 4, author: "Lipo", location: "Back Home", message: "Happiest Birthday to my Shne<3 I might need to send you a stick to the states aba chai I think it’s time for you to start using it haha (kidding of course)…..maybe next year ko laagi pre-gift? Anyway, I hope this year treats you the best, I hope to see you prosper and reach the highest always. So happy to call you my BESTTTTFRIEND and so glad you sat next to me. Love you so very much, hoping we will meet soon darling!!! Once again, Happy Birthday Shne<3" },
+    { id: 5, author: "Riyan", location: "Mumbai", message: "Happy Birthday Sneha! Wishing you days filled with joy and laughter! there will be times you'll hate your life and i want you to recall this that time, the poeple who have been with you and the people who are right now, we will always be with you no matter how much the distance. 'Duniya is flawed, you are perfect as you are' Keep Radiating as you always do star⭐ " },
   ];
 
   useEffect(() => {
