@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { Newspaper, Heart, Gift, X } from 'lucide-react';
+import { Newspaper, Heart, Gift, X, Volume2, VolumeX } from 'lucide-react';
 
 interface Video {
   id: number;
@@ -12,9 +12,12 @@ interface Video {
 
 export default function Home() {
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
+  const [isMuted, setIsMuted] = useState(true);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const videos: Video[] = [
     { id: 1, title: 'The Ultimate Birthday Wishes Compilation', src: '/bff.mp4' },
+    { id: 2, title: 'Throwback: Sneha’s Funniest Moments of the Year', src: '/sayara.mp4' },
     { id: 2, title: 'Throwback: Sneha’s Funniest Moments of the Year', src: '/VID-20260602-WA0000.mp4' },
     { id: 3, title: 'A Special Montage From the Family Archive', src: '/VID-20260602-WA0001.mp4' },
     { id: 4, title: 'Behind the Scenes: Daily Adventures & Vibes', src: '/VID-20260602-WA0002.mp4' },
@@ -27,9 +30,48 @@ export default function Home() {
     { id: 11, title: 'Behind the Scenes: Daily Adventures & Vibes', src: '/VID-20260602-WA0039.mp4' },
   ];
 
+  // Auto-play attempt on mount
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = 0.4;
+      audioRef.current.play().catch((err) => {
+        console.log("Autoplay blocked by browser. Awaiting user interaction.", err);
+      });
+    }
+  }, []);
+
+  const toggleMute = () => {
+    if (audioRef.current) {
+      audioRef.current.muted = !audioRef.current.muted;
+      setIsMuted(audioRef.current.muted);
+      if (audioRef.current.paused) {
+        audioRef.current.play();
+      }
+    }
+  };
+
+  // Automatically pause background track if a video modal pops up
+  useEffect(() => {
+    if (audioRef.current) {
+      if (selectedVideo) {
+        audioRef.current.pause();
+      } else if (!isMuted) {
+        audioRef.current.play().catch(() => {});
+      }
+    }
+  }, [selectedVideo, isMuted]);
+
   return (
-    <div className="min-h-screen bg-[#f4f1ea] text-[#1a1a1a] font-serif p-4 md:p-8 selection:bg-amber-200">
+    <div className="min-h-screen bg-[#f4f1ea] text-[#1a1a1a] font-serif p-4 md:p-8 selection:bg-amber-200 relative pb-20">
       
+      {/* Hidden Background Audio Element */}
+      <audio 
+        ref={audioRef}
+        src="/Khat.mp3" 
+        loop 
+        muted={isMuted}
+      />
+
       {/* ================= EXTRA BREAKING NEWS BANNER ================= */}
       <div className="max-w-6xl mx-auto mb-4 bg-stone-900 text-[#f4f1ea] font-sans text-xs md:text-sm font-bold uppercase tracking-widest py-2 px-4 flex justify-between items-center animate-fade-in">
         <div className="flex items-center gap-2">
@@ -72,14 +114,14 @@ export default function Home() {
                 Iconic Phenomenon Sneha Turns Another Year Wiser; Celebrations Erupt Nationwide
               </h2>
               <p className="text-sm font-sans uppercase tracking-wider text-stone-500 font-semibold">
-                By Aashish Mishra &bull; Kathmandu, Nepal
+                By Sayara Kafle &bull; Kathmandu, Nepal
               </p>
 
               {/* ================= HEADLINER PHOTO BANNER ================= */}
               <div className="border border-stone-300 bg-white p-3 shadow-sm my-4">
                 <div className="relative w-full h-[250px] sm:h-[380px] overflow-hidden bg-stone-200 grayscale contrast-125 hover:grayscale-0 transition-all duration-500 border border-stone-200">
                   <Image 
-                    src="https://images.unsplash.com/photo-1513151233558-d860c5398176?w=1200" 
+                    src="/sneha.jpg" 
                     alt="Sneha Headline Celebration Banner"
                     fill
                     priority
@@ -246,6 +288,28 @@ export default function Home() {
           </div>
         </div>
       )}
+
+      {/* ================= FLOATING MUTE SWITCH (BOTTOM RIGHT) ================= */}
+      <div className="fixed bottom-6 right-6 z-40 font-sans">
+        <button
+          onClick={toggleMute}
+          className="flex items-center gap-2 bg-stone-900 hover:bg-stone-800 text-amber-50 px-4 py-2.5 rounded-full shadow-2xl border border-stone-700 transition-all duration-300 group hover:scale-105 active:scale-95"
+          title={isMuted ? "Play Music" : "Mute Music"}
+        >
+          {isMuted ? (
+            <>
+              <VolumeX className="w-4 h-4 text-red-400" />
+              <span className="text-xs uppercase tracking-wider font-bold pr-1">Music Muted</span>
+            </>
+          ) : (
+            <>
+              <Volume2 className="w-4 h-4 text-emerald-400 animate-bounce" />
+              <span className="text-xs uppercase tracking-wider font-bold pr-1">Music Playing</span>
+            </>
+          )}
+        </button>
+      </div>
+
     </div>
   );
 }
