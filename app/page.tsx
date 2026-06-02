@@ -93,10 +93,24 @@ export default function Home() {
             <div>{new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</div>
           </div>
           
-          <h1 className="text-center font-black text-5xl md:text-7xl lg:text-8xl tracking-tight uppercase my-4 font-serif border-y-2 border-stone-950 py-2">
-            THE RISING SNEHA
+          {/* <h1 className="text-center font-black text-xl md:text-7xl lg:text-8xl tracking-tight uppercase my-4 font-serif border-y-2 border-stone-950 py-2">
+            THE RISING BADDIE AMBASSADOR SNEHA
           </h1>
-          
+           */}
+           <h1 className="text-center font-serif uppercase my-4 border-y-2 border-stone-950 py-3 flex flex-col items-center justify-center tracking-tight text-stone-950">
+  <span className="text-xs md:text-sm font-sans font-black tracking-widest text-stone-600 mb-1 block">
+    The Nation's Pride
+  </span>
+  <span className="font-black text-4xl sm:text-6xl md:text-7xl lg:text-8xl leading-none">
+    THE RISING BADDIE
+  </span>
+  <span className="font-medium italic text-2xl sm:text-4xl md:text-5xl lg:text-6xl lowercase my-1 leading-none tracking-normal block text-stone-800">
+    &mdash; ambassador &mdash;
+  </span>
+  <span className="font-black text-5xl sm:text-7xl md:text-8xl lg:text-9xl leading-none tracking-tighter block">
+    SNEHA
+  </span>
+</h1>
           <div className="text-center italic text-sm text-stone-700 tracking-wide mt-2">
             "ALL BE HAPPY, ALL BE WELL — CELEBRATING AN EXTRAORDINARY HUMAN"
           </div>
