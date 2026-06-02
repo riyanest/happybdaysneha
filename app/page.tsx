@@ -1,14 +1,65 @@
 import Image from "next/image";
-import { Newspaper, Play, Heart, Gift, Award } from 'lucide-react';
+import { Newspaper, Heart, Gift, Award } from 'lucide-react';
 
 export default function Home() {
 
-  // Updated video list to accommodate a standard layout grid
+  // 1. ADD LOCAL VIDEO URLS HERE (Files placed in your /public folder)
   const videos = [
-    { id: 1, title: 'The Ultimate Birthday Wishes Compilation', duration: '2:30' },
-    { id: 2, title: 'Throwback: Sneha’s Funniest Moments of the Year', duration: '1:45' },
-    { id: 3, title: 'A Special Montage From the Family Archive', duration: '3:15' },
-    { id: 4, title: 'Behind the Scenes: Daily Adventures & Vibes', duration: '4:20' },
+    { 
+      id: 1, 
+      title: 'The Ultimate Birthday Wishes Compilation', 
+      src: '/bff.mp4', // Points to public/video1.mp4
+    },
+    { 
+      id: 2, 
+      title: 'Throwback: Sneha’s Funniest Moments of the Year', 
+      src: '/VID-20260602-WA0000.mp4', // Points to public/video2.mp4
+    },
+    { 
+      id: 3, 
+      title: 'A Special Montage From the Family Archive', 
+      src: '/VID-20260602-WA0001.mp4', // Points to public/video3.mp4
+    },
+    { 
+      id: 4, 
+      title: 'Behind the Scenes: Daily Adventures & Vibes', 
+      src: '/VID-20260602-WA0002.mp4', // Points to public/video4.mp4
+    },
+        { 
+      id: 4, 
+      title: 'Behind the Scenes: Daily Adventures & Vibes', 
+      src: '/VID-20260602-WA0032.mp4', // Points to public/video4.mp4
+    },
+        { 
+      id: 4, 
+      title: 'Behind the Scenes: Daily Adventures & Vibes', 
+      src: '/VID-20260602-WA0033.mp4', // Points to public/video4.mp4
+    },
+        { 
+      id: 4, 
+      title: 'Behind the Scenes: Daily Adventures & Vibes', 
+      src: '/VID-20260602-WA0034.mp4', // Points to public/video4.mp4
+    },
+        { 
+      id: 4, 
+      title: 'Behind the Scenes: Daily Adventures & Vibes', 
+      src: '/VID-20260602-WA0036.mp4', // Points to public/video4.mp4
+    },
+        { 
+      id: 4, 
+      title: 'Behind the Scenes: Daily Adventures & Vibes', 
+      src: '/VID-20260602-WA0037.mp4', // Points to public/video4.mp4
+    },
+            { 
+      id: 4, 
+      title: 'Behind the Scenes: Daily Adventures & Vibes', 
+      src: '/VID-20260602-WA0038.mp4', // Points to public/video4.mp4
+    },
+            { 
+      id: 4, 
+      title: 'Behind the Scenes: Daily Adventures & Vibes', 
+      src: '/VID-20260602-WA0039.mp4', // Points to public/video4.mp4
+    },
   ];
 
   return (
@@ -59,7 +110,7 @@ export default function Home() {
                 By Aashish Mishra &bull; Kathmandu, Nepal
               </p>
 
-              {/* ================= NEW HEADLINER PHOTO BANNER ================= */}
+              {/* ================= HEADLINER PHOTO BANNER ================= */}
               <div className="border border-stone-300 bg-white p-3 shadow-sm my-4">
                 <div className="relative w-full h-[250px] sm:h-[380px] overflow-hidden bg-stone-200 grayscale contrast-125 hover:grayscale-0 transition-all duration-500 border border-stone-200">
                   <Image 
@@ -87,31 +138,39 @@ export default function Home() {
               </div>
             </article>
 
-            {/* VIDEO GRID SECTION */}
-            <section className="pt-6">
-              <div className="flex items-center gap-2 mb-4 border-b-2 border-stone-900 pb-1">
-                <Newspaper className="w-5 h-5 text-stone-800" />
-                <h3 className="text-xl font-bold uppercase tracking-tight font-sans">Special Broadcasts: The Video Grid</h3>
-              </div>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {videos.map((video) => (
-                  <div key={video.id} className="bg-stone-50 border border-stone-300 p-3 flex flex-col justify-between group cursor-pointer hover:bg-stone-100 transition-colors shadow-sm">
-                    <div className="relative aspect-video bg-stone-900 flex items-center justify-center text-white mb-3 shadow-inner">
-                      <div className="absolute inset-0 opacity-40 bg-[radial-gradient(#333_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none"></div>
-                      <div className="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center bg-black/40 group-hover:scale-110 transition-transform z-10">
-                        <Play className="w-5 h-5 fill-white ml-0.5" />
-                      </div>
-                      <span className="absolute bottom-2 right-2 text-xs bg-black/70 px-1.5 py-0.5 font-sans tracking-wider rounded z-10">{video.duration}</span>
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-sm text-stone-900 line-clamp-2 leading-snug mb-1 font-serif">{video.title}</h4>
-                      <p className="text-xs text-stone-500 font-sans">Click to launch playback &rarr;</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
+{/* VIDEO GRID SECTION (Autosizes perfectly to the video's native aspect ratio) */}
+<section className="pt-6">
+  <div className="flex items-center gap-2 mb-4 border-b-2 border-stone-900 pb-1">
+    <Newspaper className="w-5 h-5 text-stone-800" />
+    <h3 className="text-xl font-bold uppercase tracking-tight font-sans">Special Broadcasts: Living Pictures</h3>
+  </div>
+  
+  {/* Using items-start prevents shorter cards from stretching vertically */}
+  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-start">
+    {videos.map((video) => (
+      <div key={video.id} className="bg-stone-50 border border-stone-300 p-3 flex flex-col justify-between shadow-sm break-inside-avoid">
+        
+        {/* The container will now dynamically adapt to whatever shape the video is */}
+        <div className="w-full bg-stone-950 mb-3 shadow-inner overflow-hidden border border-stone-300">
+          <video 
+            src={video.src}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            className="w-full h-auto display-block grayscale contrast-115 hover:grayscale-0 transition-all duration-500"
+          />
+        </div>
+        
+        <div className="border-t border-dashed border-stone-300 pt-2">
+          <h4 className="font-bold text-sm text-stone-900 line-clamp-2 leading-snug mb-1 font-serif">{video.title}</h4>
+          <p className="text-xs text-stone-500 font-sans italic">Moving broadcast archive &bull; Dynamic ratio</p>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
 
           </main>
 
