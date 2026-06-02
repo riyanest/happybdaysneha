@@ -1,65 +1,26 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
-import { Newspaper, Heart, Gift, Award } from 'lucide-react';
+import { Newspaper, Heart, Gift, X } from 'lucide-react';
 
 export default function Home() {
+  // State to manage the active video for the lightbox modal
+  const [selectedVideo, setSelectedVideo] = useState(null);
 
-  // 1. ADD LOCAL VIDEO URLS HERE (Files placed in your /public folder)
+  // 1. LOCAL VIDEO URLS
   const videos = [
-    { 
-      id: 1, 
-      title: 'The Ultimate Birthday Wishes Compilation', 
-      src: '/bff.mp4', // Points to public/video1.mp4
-    },
-    { 
-      id: 2, 
-      title: 'Throwback: Sneha’s Funniest Moments of the Year', 
-      src: '/VID-20260602-WA0000.mp4', // Points to public/video2.mp4
-    },
-    { 
-      id: 3, 
-      title: 'A Special Montage From the Family Archive', 
-      src: '/VID-20260602-WA0001.mp4', // Points to public/video3.mp4
-    },
-    { 
-      id: 4, 
-      title: 'Behind the Scenes: Daily Adventures & Vibes', 
-      src: '/VID-20260602-WA0002.mp4', // Points to public/video4.mp4
-    },
-        { 
-      id: 4, 
-      title: 'Behind the Scenes: Daily Adventures & Vibes', 
-      src: '/VID-20260602-WA0032.mp4', // Points to public/video4.mp4
-    },
-        { 
-      id: 4, 
-      title: 'Behind the Scenes: Daily Adventures & Vibes', 
-      src: '/VID-20260602-WA0033.mp4', // Points to public/video4.mp4
-    },
-        { 
-      id: 4, 
-      title: 'Behind the Scenes: Daily Adventures & Vibes', 
-      src: '/VID-20260602-WA0034.mp4', // Points to public/video4.mp4
-    },
-        { 
-      id: 4, 
-      title: 'Behind the Scenes: Daily Adventures & Vibes', 
-      src: '/VID-20260602-WA0036.mp4', // Points to public/video4.mp4
-    },
-        { 
-      id: 4, 
-      title: 'Behind the Scenes: Daily Adventures & Vibes', 
-      src: '/VID-20260602-WA0037.mp4', // Points to public/video4.mp4
-    },
-            { 
-      id: 4, 
-      title: 'Behind the Scenes: Daily Adventures & Vibes', 
-      src: '/VID-20260602-WA0038.mp4', // Points to public/video4.mp4
-    },
-            { 
-      id: 4, 
-      title: 'Behind the Scenes: Daily Adventures & Vibes', 
-      src: '/VID-20260602-WA0039.mp4', // Points to public/video4.mp4
-    },
+    { id: 1, title: 'The Ultimate Birthday Wishes Compilation', src: '/bff.mp4' },
+    { id: 2, title: 'Throwback: Sneha’s Funniest Moments of the Year', src: '/VID-20260602-WA0000.mp4' },
+    { id: 3, title: 'A Special Montage From the Family Archive', src: '/VID-20260602-WA0001.mp4' },
+    { id: 4, title: 'Behind the Scenes: Daily Adventures & Vibes', src: '/VID-20260602-WA0002.mp4' },
+    { id: 5, title: 'Behind the Scenes: Daily Adventures & Vibes', src: '/VID-20260602-WA0032.mp4' },
+    { id: 6, title: 'Behind the Scenes: Daily Adventures & Vibes', src: '/VID-20260602-WA0033.mp4' },
+    { id: 7, title: 'Behind the Scenes: Daily Adventures & Vibes', src: '/VID-20260602-WA0034.mp4' },
+    { id: 8, title: 'Behind the Scenes: Daily Adventures & Vibes', src: '/VID-20260602-WA0036.mp4' },
+    { id: 9, title: 'Behind the Scenes: Daily Adventures & Vibes', src: '/VID-20260602-WA0037.mp4' },
+    { id: 10, title: 'Behind the Scenes: Daily Adventures & Vibes', src: '/VID-20260602-WA0038.mp4' },
+    { id: 11, title: 'Behind the Scenes: Daily Adventures & Vibes', src: '/VID-20260602-WA0039.mp4' },
   ];
 
   return (
@@ -129,7 +90,7 @@ export default function Home() {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-justify leading-relaxed text-sm text-stone-800">
                 <p>
-                  <span className="text-5xl font-bold float-left mr-2 mt-1 font-serif line-height-none text-stone-950">S</span>
+                  <span className="text-5xl font-bold float-left mr-2 mt-1 font-serif text-stone-950">S</span>
                   neha, the much-celebrated and revered icon of pure joy, friendship, and impeccable vibes, has officially reached a brand new milestone today. Following weeks of intense anticipation from friends and family worldwide, the global celebration commenced early this morning with an influx of wholesome messages, nostalgic throwbacks, and virtual toasts.
                 </p>
                 <p>
@@ -138,46 +99,54 @@ export default function Home() {
               </div>
             </article>
 
-{/* VIDEO GRID SECTION (Autosizes perfectly to the video's native aspect ratio) */}
-<section className="pt-6">
-  <div className="flex items-center gap-2 mb-4 border-b-2 border-stone-900 pb-1">
-    <Newspaper className="w-5 h-5 text-stone-800" />
-    <h3 className="text-xl font-bold uppercase tracking-tight font-sans">Special Broadcasts: Living Pictures</h3>
-  </div>
-  
-  {/* Using items-start prevents shorter cards from stretching vertically */}
-  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-start">
-    {videos.map((video) => (
-      <div key={video.id} className="bg-stone-50 border border-stone-300 p-3 flex flex-col justify-between shadow-sm break-inside-avoid">
-        
-        {/* The container will now dynamically adapt to whatever shape the video is */}
-        <div className="w-full bg-stone-950 mb-3 shadow-inner overflow-hidden border border-stone-300">
-          <video 
-            src={video.src}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            className="w-full h-auto display-block grayscale contrast-115 hover:grayscale-0 transition-all duration-500"
-          />
-        </div>
-        
-        <div className="border-t border-dashed border-stone-300 pt-2">
-          <h4 className="font-bold text-sm text-stone-900 line-clamp-2 leading-snug mb-1 font-serif">{video.title}</h4>
-          <p className="text-xs text-stone-500 font-sans italic">Moving broadcast archive &bull; Dynamic ratio</p>
-        </div>
-      </div>
-    ))}
-  </div>
-</section>
+            {/* VIDEO GRID SECTION (Now 3 columns on desktop + Interactive Modal Click) */}
+            <section className="pt-6">
+              <div className="flex items-center gap-2 mb-4 border-b-2 border-stone-900 pb-1">
+                <Newspaper className="w-5 h-5 text-stone-800" />
+                <h3 className="text-xl font-bold uppercase tracking-tight font-sans">Special Broadcasts: Living Pictures</h3>
+              </div>
+              
+              {/* Changed grid layout to display 3 columns per row on larger viewports */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-start">
+                {videos.map((video) => (
+                  <div 
+                    key={video.id} 
+                    onClick={() => setSelectedVideo(video)}
+                    className="bg-stone-50 border border-stone-300 p-3 flex flex-col justify-between shadow-sm cursor-pointer group hover:border-stone-600 hover:bg-stone-100/50 transition-all duration-300"
+                  >
+                    <div className="w-full bg-stone-950 mb-3 shadow-inner overflow-hidden border border-stone-300 relative">
+                      <video 
+                        src={video.src}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        preload="auto"
+                        className="w-full h-auto block grayscale contrast-115 group-hover:grayscale-0 transition-all duration-500"
+                      />
+                      <div className="absolute inset-0 bg-stone-900/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span className="bg-stone-900/80 text-white font-sans font-bold text-xs px-3 py-1.5 uppercase tracking-wider rounded-sm backdrop-blur-xs">
+                          Click to Play Fullscreen
+                        </span>
+                      </div>
+                    </div>
+                    
+                    <div className="border-t border-dashed border-stone-300 pt-2">
+                      <h4 className="font-bold text-xs text-stone-900 line-clamp-2 leading-snug mb-1 font-serif group-hover:text-amber-900 transition-colors">
+                        {video.title}
+                      </h4>
+                      <p className="text-[11px] text-stone-500 font-sans italic">Moving broadcast &bull; Expandable</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
 
           </main>
 
           {/* ================= RIGHT COLUMN: EDITORIAL/OPINION (4/12) ================= */}
           <aside className="lg:col-span-4 border-t-4 lg:border-t-0 lg:border-l-2 border-stone-400 lg:pl-6 space-y-6 pt-6 lg:pt-0">
             
-            {/* AUTHOR OPINION SECTION */}
             <div className="bg-[#f0ece3] p-4 border border-stone-300">
               <div className="flex flex-col items-center text-center pb-4 border-b border-stone-300">
                 <div className="relative w-20 h-20 rounded-full overflow-hidden bg-stone-300 mb-2 border border-stone-400 grayscale">
@@ -197,7 +166,6 @@ export default function Home() {
               </p>
             </div>
 
-            {/* ADVERTISEMENT BLOCK (Classic Newspaper Style) */}
             <div className="border-4 double border-stone-900 p-4 text-center space-y-2 bg-amber-50/50">
               <span className="text-[10px] font-sans uppercase tracking-widest text-stone-400 block -mt-2">Advertisement</span>
               <Heart className="w-8 h-8 mx-auto text-red-700 animate-pulse" />
@@ -210,7 +178,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* QUICK STATS/BULLETINS */}
             <div className="border border-stone-300 p-4 space-y-3">
               <h4 className="font-bold font-sans uppercase tracking-wider text-xs border-b border-stone-900 pb-1">Sneha At a Glance</h4>
               <ul className="text-xs space-y-2 font-serif text-stone-800">
@@ -235,6 +202,50 @@ export default function Home() {
         </footer>
 
       </div>
+
+      {/* ================= LIGHTBOX INTERACTIVE MODAL ================= */}
+      {selectedVideo && (
+        <div 
+          className="fixed inset-0 bg-stone-950/90 z-50 flex flex-col justify-center items-center p-4 backdrop-blur-md animate-fade-in"
+          onClick={() => setSelectedVideo(null)} // Click outside to close
+        >
+          <div 
+            className="relative w-full max-w-3xl bg-stone-900 border border-stone-700 shadow-2xl p-2 sm:p-4 rounded-md"
+            onClick={(e) => e.stopPropagation()} // Prevents closing modal when clicking the inner layout
+          >
+            {/* Close Button */}
+            <button 
+              onClick={() => setSelectedVideo(null)}
+              className="absolute -top-12 right-0 sm:right-2 bg-stone-800 hover:bg-stone-700 text-stone-200 p-2 rounded-full transition-colors focus:outline-hidden"
+              aria-label="Close presentation"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            {/* Video Player Box */}
+            <div className="w-full bg-black flex justify-center items-center rounded-sm overflow-hidden aspect-video max-h-[70vh]">
+              <video 
+                src={selectedVideo.src}
+                autoPlay
+                controls
+                muted={false} // Unmuted with audio enabled on expand
+                playsInline
+                className="w-full h-full object-contain"
+              />
+            </div>
+
+            {/* Title Metadata Block */}
+            <div className="mt-4 px-2 pb-1 text-left border-t border-stone-800 pt-3">
+              <span className="font-sans text-[10px] text-amber-400 tracking-widest uppercase font-bold block mb-1">
+                Now Airing Theatre Broadcast
+              </span>
+              <h3 className="text-lg sm:text-xl font-bold text-stone-100 font-serif leading-snug">
+                {selectedVideo.title}
+              </h3>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
