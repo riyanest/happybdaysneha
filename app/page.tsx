@@ -3,22 +3,28 @@ import { Newspaper, Play, Heart, Gift, Award } from 'lucide-react';
 
 export default function Home() {
 
-  const photos = [
-    { id: 1, url: 'https://images.unsplash.com/photo-1513151233558-d860c5398176?w=500', caption: 'Sneha celebrating a milestone moment.' },
-    { id: 2, url: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=500', caption: 'Spreading smiles and positivity, as always.' },
-    { id: 3, url: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=500', caption: 'A core memory captured with closest friends.' },
-    { id: 4, url: 'https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?w=500', caption: 'Radiating pure joy on an evening out.' },
-  ];
-
-  // Mock data for the video carousel
+  // Updated video list to accommodate a standard layout grid
   const videos = [
-    { id: 1, title: 'The Ultimate Birthday Wishes compilation', duration: '2:30' },
-    { id: 2, title: 'Throwback: Sneha’s funniest moments of the year', duration: '1:45' },
-    { id: 3, title: 'A special montage from the family', duration: '3:15' },
+    { id: 1, title: 'The Ultimate Birthday Wishes Compilation', duration: '2:30' },
+    { id: 2, title: 'Throwback: Sneha’s Funniest Moments of the Year', duration: '1:45' },
+    { id: 3, title: 'A Special Montage From the Family Archive', duration: '3:15' },
+    { id: 4, title: 'Behind the Scenes: Daily Adventures & Vibes', duration: '4:20' },
   ];
 
   return (
     <div className="min-h-screen bg-[#f4f1ea] text-[#1a1a1a] font-serif p-4 md:p-8 selection:bg-amber-200">
+      
+      {/* ================= EXTRA BREAKING NEWS BANNER ================= */}
+      <div className="max-w-6xl mx-auto mb-4 bg-stone-900 text-[#f4f1ea] font-sans text-xs md:text-sm font-bold uppercase tracking-widest py-2 px-4 flex justify-between items-center animate-fade-in">
+        <div className="flex items-center gap-2">
+          <span className="bg-red-600 text-white px-2 py-0.5 text-[10px] tracking-normal font-black animate-pulse rounded-sm">BULLETIN</span>
+          <span>Sneha Shrestha Turns a Year Wiser Today!</span>
+        </div>
+        <div className="hidden sm:block text-stone-400 text-[11px]">
+          Special Edition &bull; Free Circulation
+        </div>
+      </div>
+
       <div className="max-w-6xl mx-auto bg-[#faf8f5] border border-stone-300 p-6 shadow-xl shadow-stone-800/10">
         
         {/* ================= NEWSPAPER HEADER ================= */}
@@ -52,6 +58,23 @@ export default function Home() {
               <p className="text-sm font-sans uppercase tracking-wider text-stone-500 font-semibold">
                 By Aashish Mishra &bull; Kathmandu, Nepal
               </p>
+
+              {/* ================= NEW HEADLINER PHOTO BANNER ================= */}
+              <div className="border border-stone-300 bg-white p-3 shadow-sm my-4">
+                <div className="relative w-full h-[250px] sm:h-[380px] overflow-hidden bg-stone-200 grayscale contrast-125 hover:grayscale-0 transition-all duration-500 border border-stone-200">
+                  <Image 
+                    src="https://images.unsplash.com/photo-1513151233558-d860c5398176?w=1200" 
+                    alt="Sneha Headline Celebration Banner"
+                    fill
+                    priority
+                    sizes="(max-w-1200px) 100vw, 800px"
+                    className="object-cover"
+                  />
+                </div>
+                <div className="mt-2 text-xs italic text-stone-600 text-center font-serif pt-2 border-t border-dashed border-stone-200">
+                  Historic Record: Sneha captured during a historic moment of absolute milestone celebration. 
+                </div>
+              </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-justify leading-relaxed text-sm text-stone-800">
                 <p>
@@ -64,52 +87,26 @@ export default function Home() {
               </div>
             </article>
 
-            {/* VIDEO CAROUSEL SECTION */}
+            {/* VIDEO GRID SECTION */}
             <section className="pt-6">
               <div className="flex items-center gap-2 mb-4 border-b-2 border-stone-900 pb-1">
                 <Newspaper className="w-5 h-5 text-stone-800" />
-                <h3 className="text-xl font-bold uppercase tracking-tight font-sans">Special Broadcasts (Video Archive)</h3>
+                <h3 className="text-xl font-bold uppercase tracking-tight font-sans">Special Broadcasts: The Video Grid</h3>
               </div>
               
-              {/* Horizontal Scrollable Newspaper Video Row */}
-              <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-stone-400">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {videos.map((video) => (
-                  <div key={video.id} className="min-w-[280px] md:min-w-[320px] bg-stone-100 border border-stone-300 p-3 flex flex-col justify-between group cursor-pointer hover:bg-stone-200 transition-colors">
+                  <div key={video.id} className="bg-stone-50 border border-stone-300 p-3 flex flex-col justify-between group cursor-pointer hover:bg-stone-100 transition-colors shadow-sm">
                     <div className="relative aspect-video bg-stone-900 flex items-center justify-center text-white mb-3 shadow-inner">
                       <div className="absolute inset-0 opacity-40 bg-[radial-gradient(#333_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none"></div>
-                      <div className="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center bg-black/40 group-hover:scale-110 transition-transform">
+                      <div className="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center bg-black/40 group-hover:scale-110 transition-transform z-10">
                         <Play className="w-5 h-5 fill-white ml-0.5" />
                       </div>
-                      <span className="absolute bottom-2 right-2 text-xs bg-black/70 px-1.5 py-0.5 font-sans tracking-wider rounded">{video.duration}</span>
+                      <span className="absolute bottom-2 right-2 text-xs bg-black/70 px-1.5 py-0.5 font-sans tracking-wider rounded z-10">{video.duration}</span>
                     </div>
                     <div>
                       <h4 className="font-bold text-sm text-stone-900 line-clamp-2 leading-snug mb-1 font-serif">{video.title}</h4>
-                      <p className="text-xs text-stone-500 font-sans">Press to replay memory &rarr;</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* PHOTO GRID GALLERY */}
-            <section className="pt-6">
-              <div className="flex items-center gap-2 mb-4 border-b-2 border-stone-900 pb-1">
-                <Award className="w-5 h-5 text-stone-800" />
-                <h3 className="text-xl font-bold uppercase tracking-tight font-sans">Historic Exhibition: Sneha in Frames</h3>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {photos.map((photo) => (
-                  <div key={photo.id} className="border border-stone-300 bg-white p-3 shadow-sm">
-                    <div className="relative aspect-square overflow-hidden bg-stone-200 grayscale contrast-125 hover:grayscale-0 transition-all duration-500 border border-stone-200">
-                      <img 
-                        src={photo.url} 
-                        alt="Sneha's memory" 
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="mt-2 text-xs italic text-stone-600 text-center font-serif pt-2 border-t border-dashed border-stone-200">
-                      Fig {photo.id}. {photo.caption}
+                      <p className="text-xs text-stone-500 font-sans">Click to launch playback &rarr;</p>
                     </div>
                   </div>
                 ))}
@@ -124,8 +121,13 @@ export default function Home() {
             {/* AUTHOR OPINION SECTION */}
             <div className="bg-[#f0ece3] p-4 border border-stone-300">
               <div className="flex flex-col items-center text-center pb-4 border-b border-stone-300">
-                <div className="w-20 h-20 rounded-full overflow-hidden bg-stone-300 mb-2 border border-stone-400 grayscale">
-                  <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="Author" className="object-cover w-full h-full"/>
+                <div className="relative w-20 h-20 rounded-full overflow-hidden bg-stone-300 mb-2 border border-stone-400 grayscale">
+                  <Image 
+                    src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" 
+                    alt="Editorial Board portrait" 
+                    fill 
+                    className="object-cover"
+                  />
                 </div>
                 <h4 className="font-bold text-lg text-stone-900 font-sans tracking-tight">Editorial Board</h4>
                 <p className="text-xs text-stone-500 font-sans italic">"On the Culture of Celebrating Sneha"</p>
