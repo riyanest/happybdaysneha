@@ -76,7 +76,7 @@ export default function Home() {
       <div className="max-w-6xl mx-auto mb-4 bg-stone-900 text-[#f4f1ea] font-sans text-xs md:text-sm font-bold uppercase tracking-widest py-2 px-4 flex justify-between items-center animate-fade-in">
         <div className="flex items-center gap-2">
           <span className="bg-red-600 text-white px-2 py-0.5 text-[10px] tracking-normal font-black animate-pulse rounded-sm">BULLETIN</span>
-          <span>Sneha Shrestha Turns a Year Wiser Today!</span>
+          <span>Sneha Rathlaja Turns a Year Wiser Today!</span>
         </div>
         <div className="hidden sm:block text-stone-400 text-[11px]">
           Special Edition &bull; Free Circulation
