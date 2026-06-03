@@ -39,18 +39,18 @@ export default function Home() {
   const [sudokuSolved, setSudokuSolved] = useState(false);
 
   const videos: Video[] = [
-    { id: 1, title: 'Lipo', src: '/bff.mp4' },
+    { id: 1, title: 'Manjima ', src: '/bff.mp4' },
     { id: 2, title: 'Sayara', src: '/sayara.mp4' },
     { id: 2, title: 'Ava', src: '/VID-20260602-WA0000.mp4' },
-    { id: 3, title: 'A Special Montage From the Family Archive', src: '/VID-20260602-WA0001.mp4' },
-    { id: 4, title: 'Behind the Scenes: Daily Adventures & Vibes', src: '/VID-20260602-WA0002.mp4' },
-    { id: 5, title: 'Behind the Scenes: Daily Adventures & Vibes', src: '/VID-20260602-WA0032.mp4' },
-    { id: 6, title: 'Behind the Scenes: Daily Adventures & Vibes', src: '/VID-20260602-WA0033.mp4' },
-    { id: 7, title: 'Behind the Scenes: Daily Adventures & Vibes', src: '/VID-20260602-WA0034.mp4' },
-    { id: 8, title: 'Behind the Scenes: Daily Adventures & Vibes', src: '/VID-20260602-WA0036.mp4' },
-    { id: 9, title: 'Behind the Scenes: Daily Adventures & Vibes', src: '/VID-20260602-WA0037.mp4' },
-    { id: 10, title: 'Behind the Scenes: Daily Adventures & Vibes', src: '/VID-20260602-WA0038.mp4' },
-    { id: 11, title: 'Behind the Scenes: Daily Adventures & Vibes', src: '/VID-20260602-WA0039.mp4' },
+    { id: 3, title: 'Lipi', src: '/VID-20260602-WA0001.mp4' },
+    { id: 4, title: 'Ashish', src: '/VID-20260602-WA0002.mp4' },
+    { id: 5, title: 'Sister', src: '/VID-20260602-WA0032.mp4' },
+    { id: 6, title: 'Brother', src: '/VID-20260602-WA0033.mp4' },
+    { id: 7, title: 'Mom', src: '/VID-20260602-WA0034.mp4' },
+    { id: 8, title: 'Family', src: '/VID-20260602-WA0036.mp4' },
+    { id: 9, title: 'Family', src: '/VID-20260602-WA0037.mp4' },
+    { id: 10, title: 'Family', src: '/VID-20260602-WA0038.mp4' },
+    { id: 11, title: 'Family', src: '/VID-20260602-WA0039.mp4' },
   ];
 
   const testimonials: Testimonial[] = [
